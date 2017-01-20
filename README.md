@@ -22,7 +22,7 @@ The bot will respond with a host of information on the stock. Below is an exampl
     Average (50 day): 115.59
     Exchange: NMS
     -----------------------------------
-    Don't abuse me, I'm merely a robot! | Source Code | Report Bug | Suggest Feature
+    Don't abuse me, robots have feeling too! | Source Code | Report Bug | Suggest Feature
     
 **Step by step process**
 
