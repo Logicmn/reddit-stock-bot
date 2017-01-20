@@ -37,20 +37,25 @@ The bot will respond with a host of information on the stock. Below is an exampl
 Use `pip` to install the following packages/modules:
 
 praw
+
 `pip install praw`
 
 yahoo_finance
+
 `pip install yahoo_finance`
 
 sqlalchemy
+
 `pip install sqlalchemy`
 
 time
+
 (built into Python 3.X)
 
 datetime
+
 (built into Python 3.X)
 
 ---------------------------------
 
-Enjoy!
+**Enjoy!**
