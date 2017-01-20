@@ -5,9 +5,11 @@
 ---------------------------------
 
 **Call**
+
 The syntax is simple, to retrive information about a stock simply place `!stock AAPL` somewhere in your Reddit comment. `AAPL` can obviously be replaced by and other stock on any exchange (`GOOG`, `AMZN`, `MSFT`, etc).
 
 **Response**
+
 The bot will respond with a host of information on the stock. Below is an example of a response for the comment `!stock AAPL`.
 
     Up to date stock info for $AAPL (Apple Inc.):
