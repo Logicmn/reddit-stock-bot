@@ -1,3 +1,5 @@
 praw
 yahoo_finance
+sqlalchemy
 time
+datetime
