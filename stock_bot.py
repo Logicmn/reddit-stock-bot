@@ -21,7 +21,6 @@ def check_condition(c):
         respond = True                   # If !stock is in the comment set respond to true
         for word in tokens:
             counter += 1
-            word = word.lower            # Turn every word the loop iterates through lowercase
             if word == '!stock':
                 symbol = tokens[counter] # Isolate the stock symbol (word following !stock) by using a counter
                 return symbol, respond
