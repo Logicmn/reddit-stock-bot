@@ -17,7 +17,7 @@ r = praw.Reddit('bot1')
 #---------------------#
 
 #---------Linking database to SQLAlchemy engine---------#
-engine = create_engine('sqlite:///new_db.db', echo=True)
+engine = create_engine('sqlite:///example.db', echo=True)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 metadata = MetaData()
