@@ -16,12 +16,15 @@ from sqlalchemy.orm import sessionmaker
 r = praw.Reddit('bot1')
 #---------------------#
 
-engine = create_engine('sqlite:///new_db.db', echo=True) # Link the database to the SQLAlchemy engine
+#---------Linking database to SQLAlchemy engine---------#
+engine = create_engine('sqlite:///new_db.db', echo=True)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 metadata = MetaData()
 session = Session()
+#-------------------------------------------------------#
 
+#---------------------------------Create table in database---------------------------------#
 class Comment(Base):
     __tablename__ = 'comments'
     id = Column(Integer, Sequence('comment_id_seq'), primary_key=True)
@@ -30,6 +33,7 @@ class Comment(Base):
 
     def __repr__(self):
         return "<Comment(rcomment='{0}', rtime='(1)')>".format(self.rcomment, self.rtime)
+#-----------------------------------------------------------------------------------------#
 
 #-----------------------------------------Check for the keyword !stock------------------------------------------#
 def check_condition(c):
@@ -38,13 +42,13 @@ def check_condition(c):
     tokens = text.split()                # Separate the comment into a word by word list
     if '!stock' in tokens:
         for comment in session.query(Comment.rcomment).order_by(Comment.id.desc()).all():
-            if comment == c:
+            if comment[0] == str(c):     # Prevents bot from replying to same comment twice
                 respond = False
                 symbol = None
                 print("found duplicate")
                 return symbol, respond
         print (c)
-        new_comment = Comment(rcomment = c, rtime = datetime.datetime.now())
+        new_comment = Comment(rcomment = str(c), rtime = str(datetime.datetime.now()))
         session.add(new_comment)
         session.commit()
         respond = True                   # If !stock is in the comment set respond to true
@@ -65,6 +69,7 @@ def bot_action(c, symbol):
     print(stock)
     if stock.get_price() == None:
         main()
+    #print(stock.get_price())
     head = 'Up to date stock info for **${0}** ({1}):\n\n'.format(symbol.upper(), stock.get_name())
     price = '**Price:** ${0:.2f}\n\n'.format(float(stock.get_price()))
     price_open = '**Open:** ${0:.2f}\n\n'.format(float(stock.get_open()))
@@ -74,20 +79,11 @@ def bot_action(c, symbol):
     average = '**Average (50 day):** {0:.2f}\n\n'.format(float(stock.get_50day_moving_avg()))
     exchange = '**Exchange:** {0}\n\n'.format(stock.get_stock_exchange())
     divider = '-----------------------------------------------------------------------------------------\n\n'
-    tail = "Don't abuse me, I'm merely a robot! | [Source Code](https://github.com/Logicmn/Reddit-Stock-Bot) " \
+    tail = "Don't abuse me, robots have feelings too! | [Source Code](https://github.com/Logicmn/Reddit-Stock-Bot) " \
            "| [Report Bug](https://www.reddit.com/message/compose/?to=Pick-a-Stock) " \
            "| [Suggest Feature](https://www.reddit.com/message/compose/?to=Pick-a-Stock)"
     c.reply(head + divider + price + price_open + change + vol + market_cap + average + exchange+ divider + tail)
 #----------------------------------------------------------------------------------------------------------------#
-
-"""
-def write_log(c):
-    f = open("log.txt", "w+")
-    f.write("{0}\n".format(c))
-    f.close
-"""
-
-
 
 #-----------------------------------------------------Main-------------------------------------------------------#
 def main():
